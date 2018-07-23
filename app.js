@@ -1,19 +1,13 @@
 "use strict";
 
+const express = require('express');
+const app = express();
 require('dotenv').config();
-const request = require('request');
 
+app.use(express.static('public'));
 
-//get users videos search
-function getVideos(q){
-  const url = process.env.SEARCH_URL + process.env.APIKEY + '&part=snippet&q=' + q;
+app.set('port', process.env.PORT || 3000);
 
-  request(url, function(error, response, body){
-    if(error){
-      console.log('error: ', error);
-      return('status Code: ', response && response.statusCode);
-    } else {
-      return body;
-    }
-  });
-};
+const server = app.listen(app.get('port'), function(){
+  console.log("server running on port " + server.address().port);
+})
